@@ -38,16 +38,12 @@ class HashTable:
 
 
     def insert(self, key, value):
-        '''
-        Store the value with the given key.
+        index_value = self._hash_mod(key)
+        self.storage[index_value] = value
 
-        Hash collisions should be handled with Linked List Chaining.
-
-        Fill this in.
-        '''
-        pass
-
-
+    def print_stuff(self):
+        for item in self.storage:
+            print(item)
 
     def remove(self, key):
         '''

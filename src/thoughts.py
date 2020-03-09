@@ -13,5 +13,14 @@ provide a number between 0 and the length of the hashtable - 1.
     2.) The index is currently occupied. If this is the case, we should instantiate a linked list with our items that have the same index
 
 
-
 '''
+
+from hashtable import HashTable
+
+
+ht=HashTable(8)
+
+ht.insert('hello', 'world')
+ht.insert('goodbye', 'sweet prince')
+
+ht.print_stuff()
