@@ -18,10 +18,12 @@ provide a number between 0 and the length of the hashtable - 1.
 from hashtable import HashTable
 
 
-ht=HashTable(20)
+ht=HashTable(2)
 
 ht.insert('hello', 'world')
 ht.insert('goodbye', 'earth')
 ht.insert('test', 'testing')
 
-ht.print_stuff()
+print(ht.retrieve('hello'))
+print(ht.retrieve('goodbye'))
+print(ht.retrieve('test'))

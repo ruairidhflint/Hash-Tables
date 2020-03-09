@@ -44,14 +44,14 @@ class HashTable:
         if self.storage[index_value] is None:
             # Instantiate it to a Linked Pair (Class)
             self.storage[index_value] = LinkedPair(key, value)
-        # If not, an item must already exist at that spot. Loop through until a Linked Pair's next is None and then
+        # If not, an item must already exist at that spot.
         else:
-            # set that to a LinkedPair with the key value. 
+            # loop through the items at that index until we find the end (self.next is none)
             current_item = self.storage[index_value]
 
             while current_item.next is not None:
                 current_item = current_item.next
-            
+            # set the next item as a new LinkedPair with the key values
             current_item.next = LinkedPair(key, value)
 
     def print_stuff(self):
@@ -70,14 +70,22 @@ class HashTable:
 
 
     def retrieve(self, key):
-        '''
-        Retrieve the value stored with the given key.
+        # Hash the key to get the correct location
+        index_value = self._hash_mod(key)
+        # set the current value variable to be the first item in the linked list at the correct index
+        current_value = self.storage[index_value]
 
-        Returns None if the key is not found.
+        while current_value.next is not None:
+            if current_value.key == key:
+                return current_value.value
+            else:
+                current_value = current_value.next
 
-        Fill this in.
-        '''
-        pass
+        if current_value.key == key:
+            return current_value.value
+        else:
+            return None
+
 
 
     def resize(self):
