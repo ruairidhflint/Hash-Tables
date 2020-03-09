@@ -45,11 +45,20 @@ class HashTable:
             # Instantiate it to a Linked Pair (Class)
             self.storage[index_value] = LinkedPair(key, value)
         # If not, an item must already exist at that spot.
+
         else:
             # loop through the items at that index until we find the end (self.next is none)
             current_item = self.storage[index_value]
 
+            if current_item.key == key:
+                current_item.value = value
+                return
+
             while current_item.next is not None:
+                if current_item.key == key:
+                    current_item.value == value
+                    return
+
                 current_item = current_item.next
             # set the next item as a new LinkedPair with the key values
             current_item.next = LinkedPair(key, value)
@@ -59,28 +68,40 @@ class HashTable:
             print(item)
 
     def remove(self, key):
-        '''
-        Remove the value stored with the given key.
+        # Hash the key to get the correct location
+        index_value = self._hash_mod(key)
+        # Set temporary variable to be the first item in the list
+        current_value = self.storage[index_value]
 
-        Print a warning if the key is not found.
-
-        Fill this in.
-        '''
-        pass
-
+        # if it's the first item in the list, set the first item to be the current items next value
+        if current_value.key == key:
+            self.storage[index_value] = current_value.next
+        else:
+            while current_value.next != key:
+                if current_value.next is None:
+                    return None
+                else:
+                    current_value = current_value.next
+            
+            current_value.next = current_value.next.next
+        
 
     def retrieve(self, key):
         # Hash the key to get the correct location
         index_value = self._hash_mod(key)
         # set the current value variable to be the first item in the linked list at the correct index
         current_value = self.storage[index_value]
-
+        # Loop through checking if the current key matches the key provided
         while current_value.next is not None:
+            # if it matches, return the value
             if current_value.key == key:
                 return current_value.value
+            # otherwise move on to the next value
             else:
                 current_value = current_value.next
 
+                
+        # once we reach the end of the chain, check the last value to see if it matches
         if current_value.key == key:
             return current_value.value
         else:

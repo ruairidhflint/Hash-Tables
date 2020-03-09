@@ -2,7 +2,6 @@
 
 HASH TABLE IMPLEMENTATION (1st draft)
 
-
 INSERT:
 - Hash the key value. This will produce an integer of a large size.
 - Perform a modulo operation on this new integer dividing by the capcity of the hashtable which will
@@ -13,17 +12,30 @@ provide a number between 0 and the length of the hashtable - 1.
     2.) The index is currently occupied. If this is the case, we should instantiate a linked list with our items that have the same index
 
 
+hash_table = [None, None, None, None, None]
+
+hash_table.insert('hello', 'world')
+
+hash_table[2] = {'hello', 'world', 'none'}
+
+hash_table.insert('goodbye', 'earth')
+
+hash_table[2] = {'hello', 'world', --> {'goodbye', 'earth', 'none'}}
+
+.retrieve('mike')
+
+
 '''
 
 from hashtable import HashTable
 
 
-ht=HashTable(2)
+ht=HashTable(8)
 
 ht.insert('hello', 'world')
 ht.insert('goodbye', 'earth')
 ht.insert('test', 'testing')
+ht.insert('rory', 'world')
 
-print(ht.retrieve('hello'))
-print(ht.retrieve('goodbye'))
-print(ht.retrieve('test'))
+# ht.print_stuff()
+
