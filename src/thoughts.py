@@ -30,12 +30,11 @@ hash_table[2] = {'hello', 'world', --> {'goodbye', 'earth', 'none'}}
 from hashtable import HashTable
 
 
-ht=HashTable(8)
+ht=HashTable(10)
 
 ht.insert('hello', 'world')
 ht.insert('goodbye', 'earth')
 ht.insert('test', 'testing')
-ht.insert('rory', 'world')
 
-# ht.print_stuff()
+ht.print_stuff()
 

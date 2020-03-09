@@ -19,7 +19,6 @@ class HashTable:
     def _hash(self, key):
         return hash(key)
 
-
     def _hash_djb2(self, key):
         '''
         Hash an arbitrary key using DJB2 hash
@@ -28,14 +27,12 @@ class HashTable:
         '''
         pass
 
-
     def _hash_mod(self, key):
         '''
         Take an arbitrary key and return a valid integer index
         within the storage capacity of the hash table.
         '''
         return self._hash(key) % self.capacity
-
 
     def insert(self, key, value):
         # Get index value of key
@@ -44,24 +41,21 @@ class HashTable:
         if self.storage[index_value] is None:
             # Instantiate it to a Linked Pair (Class)
             self.storage[index_value] = LinkedPair(key, value)
-        # If not, an item must already exist at that spot.
 
+        # If not, an item must already exist at that spot.
         else:
             # loop through the items at that index until we find the end (self.next is none)
             current_item = self.storage[index_value]
 
-            if current_item.key == key:
-                current_item.value = value
-                return
-
-            while current_item.next is not None:
-                if current_item.key == key:
-                    current_item.value == value
+            while current_item.key != key:
+                if current_item.next is None:
+                    current_item.next = LinkedPair(key, value)
                     return
+                else:
+                    current_item = current_item.next
+            
+            current_item.value = value
 
-                current_item = current_item.next
-            # set the next item as a new LinkedPair with the key values
-            current_item.next = LinkedPair(key, value)
 
     def print_stuff(self):
         for item in self.storage:
