@@ -117,10 +117,22 @@ class HashTable:
         Fill this in.
         '''
 
-        doubled_storage = [None] * (self.capacity * 2)
+        # Save old storage and old capacity
+        prev_cap = self.capacity
+        prev_storage = self.storage
+        # Create a new storage list that is double the length of the original
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
 
-        
+        for x in range(prev_cap):
+            current = prev_storage[x]
 
+            if current is None:
+                continue
+
+            while current is not None:
+                self.insert(current.key, current.value)
+                current = current.next
 
 if __name__ == "__main__":
     ht = HashTable(2)
