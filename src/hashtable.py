@@ -46,8 +46,13 @@ class HashTable:
             self.storage[index_value] = LinkedPair(key, value)
         # If not, an item must already exist at that spot. Loop through until a Linked Pair's next is None and then
         else:
-            print('no dice, baby')
-        # set that to a LinkedPair with the key value. 
+            # set that to a LinkedPair with the key value. 
+            current_item = self.storage[index_value]
+
+            while current_item.next is not None:
+                current_item = current_item.next
+            
+            current_item.next = LinkedPair(key, value)
 
     def print_stuff(self):
         for item in self.storage:
