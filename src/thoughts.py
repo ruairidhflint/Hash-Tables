@@ -18,7 +18,7 @@ provide a number between 0 and the length of the hashtable - 1.
 from hashtable import HashTable
 
 
-ht=HashTable(8)
+ht=HashTable(3)
 
 ht.insert('hello', 'world')
 ht.insert('goodbye', 'sweet prince')

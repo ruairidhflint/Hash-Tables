@@ -38,8 +38,16 @@ class HashTable:
 
 
     def insert(self, key, value):
+        # Get index value of key
         index_value = self._hash_mod(key)
-        self.storage[index_value] = value
+        # Check if index is currently empty
+        if self.storage[index_value] is None:
+            # Instantiate it to a Linked Pair (Class)
+            self.storage[index_value] = LinkedPair(key, value)
+        # If not, an item must already exist at that spot. Loop through until a Linked Pair's next is None and then
+        else:
+            print('no dice, baby')
+        # set that to a LinkedPair with the key value. 
 
     def print_stuff(self):
         for item in self.storage:
