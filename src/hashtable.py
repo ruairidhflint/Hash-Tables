@@ -1,17 +1,21 @@
 # '''
 # Linked List hash table key/value pair
 # '''
+
+
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
 
+
 class HashTable:
     '''
     A hash table that with `capacity` buckets
     that accepts string keys
     '''
+
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
@@ -53,9 +57,8 @@ class HashTable:
                     return
                 else:
                     current_item = current_item.next
-            
-            current_item.value = value
 
+            current_item.value = value
 
     def print_stuff(self):
         for item in self.storage:
@@ -66,24 +69,30 @@ class HashTable:
         index_value = self._hash_mod(key)
         # Set temporary variable to be the first item in the list
         current_value = self.storage[index_value]
-
         # if it's the first item in the list, set the first item to be the current items next value
+
         if current_value.key == key:
             self.storage[index_value] = current_value.next
         else:
-            while current_value.next != key:
-                if current_value.next is None:
-                    return None
+            while current_value.next is not None:
+                if current_value.next.key == key:
+                    current_value.next = current_value.next.next
+                    return
                 else:
                     current_value = current_value.next
-            
-            current_value.next = current_value.next.next
-        
+
+            return None
 
     def retrieve(self, key):
         # Hash the key to get the correct location
         index_value = self._hash_mod(key)
+
+        # Check there is something stored at this index
+
+        if self.storage[index_value] is None:
+            return None
         # set the current value variable to be the first item in the linked list at the correct index
+
         current_value = self.storage[index_value]
         # Loop through checking if the current key matches the key provided
         while current_value.next is not None:
@@ -94,14 +103,11 @@ class HashTable:
             else:
                 current_value = current_value.next
 
-                
         # once we reach the end of the chain, check the last value to see if it matches
         if current_value.key == key:
             return current_value.value
         else:
             return None
-
-
 
     def resize(self):
         '''
@@ -110,8 +116,10 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
 
+        doubled_storage = [None] * (self.capacity * 2)
+
+        
 
 
 if __name__ == "__main__":
