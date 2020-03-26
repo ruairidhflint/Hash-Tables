@@ -1,30 +1,27 @@
 # '''
 # Linked List hash table key/value pair
 # '''
+
+
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
 
+
 class HashTable:
     '''
     A hash table that with `capacity` buckets
     that accepts string keys
     '''
+
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
 
-
     def _hash(self, key):
-        '''
-        Hash an arbitrary key and return an integer.
-
-        You may replace the Python hash with DJB2 as a stretch goal.
-        '''
         return hash(key)
-
 
     def _hash_djb2(self, key):
         '''
@@ -34,7 +31,6 @@ class HashTable:
         '''
         pass
 
-
     def _hash_mod(self, key):
         '''
         Take an arbitrary key and return a valid integer index
@@ -42,40 +38,76 @@ class HashTable:
         '''
         return self._hash(key) % self.capacity
 
-
     def insert(self, key, value):
-        '''
-        Store the value with the given key.
+        # Get index value of key
+        index_value = self._hash_mod(key)
+        # Check if index is currently empty
+        if self.storage[index_value] is None:
+            # Instantiate it to a Linked Pair (Class)
+            self.storage[index_value] = LinkedPair(key, value)
 
-        Hash collisions should be handled with Linked List Chaining.
+        # If not, an item must already exist at that spot.
+        else:
+            # loop through the items at that index until we find the end (self.next is none)
+            current_item = self.storage[index_value]
 
-        Fill this in.
-        '''
-        pass
+            while current_item.key != key:
+                if current_item.next is None:
+                    current_item.next = LinkedPair(key, value)
+                    return
+                else:
+                    current_item = current_item.next
 
+            current_item.value = value
 
+    def print_stuff(self):
+        for item in self.storage:
+            print(item)
 
     def remove(self, key):
-        '''
-        Remove the value stored with the given key.
+        # Hash the key to get the correct location
+        index_value = self._hash_mod(key)
+        # Set temporary variable to be the first item in the list
+        current_value = self.storage[index_value]
+        # if it's the first item in the list, set the first item to be the current items next value
 
-        Print a warning if the key is not found.
+        if current_value.key == key:
+            self.storage[index_value] = current_value.next
+        else:
+            while current_value.next is not None:
+                if current_value.next.key == key:
+                    current_value.next = current_value.next.next
+                    return
+                else:
+                    current_value = current_value.next
 
-        Fill this in.
-        '''
-        pass
-
+            return None
 
     def retrieve(self, key):
-        '''
-        Retrieve the value stored with the given key.
+        # Hash the key to get the correct location
+        index_value = self._hash_mod(key)
 
-        Returns None if the key is not found.
+        # Check there is something stored at this index
 
-        Fill this in.
-        '''
-        pass
+        if self.storage[index_value] is None:
+            return None
+        # set the current value variable to be the first item in the linked list at the correct index
 
+        current_value = self.storage[index_value]
+        # Loop through checking if the current key matches the key provided
+        while current_value.next is not None:
+            # if it matches, return the value
+            if current_value.key == key:
+                return current_value.value
+            # otherwise move on to the next value
+            else:
+                current_value = current_value.next
+
+        # once we reach the end of the chain, check the last value to see if it matches
+        if current_value.key == key:
+            return current_value.value
+        else:
+            return None
 
     def resize(self):
         '''
@@ -84,9 +116,23 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
 
+        # Save old storage and old capacity
+        prev_cap = self.capacity
+        prev_storage = self.storage
+        # Create a new storage list that is double the length of the original
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
 
+        for x in range(prev_cap):
+            current = prev_storage[x]
+
+            if current is None:
+                continue
+
+            while current is not None:
+                self.insert(current.key, current.value)
+                current = current.next
 
 if __name__ == "__main__":
     ht = HashTable(2)
